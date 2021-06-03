@@ -75,7 +75,7 @@ public class App
     
     // https://cloud.google.com/spanner/docs/samples/spanner-update-data
     // https://cloud.google.com/spanner/docs/samples/spanner-insert-data
-    static void writeExampleData(DatabaseClient dbClient) {
+    static void writeSongData(DatabaseClient dbClient) {
   List<Mutation> mutations = new ArrayList<>();
 
 // TODO: singers implementation
@@ -109,7 +109,31 @@ public class App
     public static void main( String[] args )
     {
         System.out.println( "Hello World!" );
-    }
+
+        // https://cloud.google.com/spanner/docs/samples/spanner-create-client-with-query-options
+        SpannerOptions options = SpannerOptions.newBuilder()
+               //.setDefaultQueryOptions(db, QueryOptions.newBuilder().setOptimizerVersion("1").build())
+               .build();
+        Spanner spanner = options.getService();
+        String instanceId = "cloudspanner-lab";
+        String databaseId = "demo";
+
+        try {
+            DatabaseClient dbClient = spanner.getDatabaseClient(DatabaseId.of(options.getProjectId(), instanceId, databaseId));
+            writeSongData(dbClient);
+            try (ResultSet resultSet = dbClient
+                .singleUse()
+                .executeQuery(Statement.of("SELECT SongId, Title, Year FROM Songs"))) {
+        while (resultSet.next()) {
+            System.out.printf(
+                "%d %d %s\n", resultSet.getString(0), resultSet.getString(1), resultSet.getLong(2));
+        }    }
+        } finally {
+            spanner.close();
+        }
+        
+            }
+    
 
     public static String getUUID() {
         return java.util.UUID.randomUUID().toString();
