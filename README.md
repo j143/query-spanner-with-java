@@ -27,4 +27,13 @@ CREATE TABLE Singers (
 ) PRIMARY KEY (SingerId);
 ```
 
+## Maven project
 
+Generate empty maven project. Refer https://maven.apache.org/guides/getting-started/index.html
+
+```sh
+mvn -B archetype:generate \
+  -DarchetypeGroupId=org.apache.maven.archetypes \
+  -DgroupId=page.janardhan.labs \
+  -DartifactId=spanner-with-java
+```
