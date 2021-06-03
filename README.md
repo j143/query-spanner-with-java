@@ -47,3 +47,27 @@ Refer:
 
 Add dependencies to the `pom.xml`
 
+```xml
+<dependency>
+      <groupId>com.google.cloud</groupId>
+      <artifactId>google-cloud-spanner</artifactId>
+      <version>6.5</version>
+    </dependency>
+
+    <!-- Google core libraries for Java 
+      https://search.maven.org/artifact/com.google.guava/guava/30.1.1-jre/bundle -->
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>30.1.1-jre</version>
+      <type>bundle</type>
+    </dependency>
+
+    <!-- Google OAUTH library http
+      https://search.maven.org/artifact/com.google.auth/google-auth-library-oauth2-http/0.26.0/jar -->
+    <dependency>
+      <groupId>com.google.auth</groupId>
+      <artifactId>google-auth-library-oauth2-http</artifactId>
+      <version>0.26.0</version>
+    </dependency>
+```
