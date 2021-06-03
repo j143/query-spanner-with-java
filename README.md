@@ -71,3 +71,6 @@ Add dependencies to the `pom.xml`
       <version>0.26.0</version>
     </dependency>
 ```
+
+Add Maven assembly and compiler plugins.
+
