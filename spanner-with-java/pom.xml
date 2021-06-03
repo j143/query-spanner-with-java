@@ -40,7 +40,7 @@
           </descriptorRefs>
           <archive>
             <manifest>
-              <addClassPath>true</addClassPath>
+              <addClasspath>true</addClasspath>
               <mainClass>page.janardhan.labs.App</mainClass>
             </manifest>
           </archive>
