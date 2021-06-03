@@ -86,3 +86,10 @@ https://cloud.google.com/spanner/pricing
 | 3. | Backup storage | $0.30 /GB/month |
 | 4. | Network | Free in the same region |
 
+Cloud Spanner emulator can be used for testing.
+
+## Usage
+
+```sh
+java -jar spanner-with-java/target/spanner-with-java-1.0-SNAPSHOT-jar-with-dependencies.jar
+```
