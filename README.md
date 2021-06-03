@@ -74,3 +74,15 @@ Add dependencies to the `pom.xml`
 
 Add Maven assembly and compiler plugins.
 
+
+## Testing
+
+https://cloud.google.com/spanner/pricing
+
+| #  | Component | price |
+| -- | -- | -- |
+| 1. | Nodes  | $0.90 /node/hour (europe-west1) |
+| 2. | Database storage | $0.33 /GB/month |
+| 3. | Backup storage | $0.30 /GB/month |
+| 4. | Network | Free in the same region |
+
