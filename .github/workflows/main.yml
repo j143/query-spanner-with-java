@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Spanner test with emulator
 
 # Controls when the action will run. 
 on:
@@ -19,12 +19,27 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
+    # Service containers or container jobs are available in Linux environment only
     runs-on: ubuntu-latest
+
+    # Service containers to run with `runner-job`
+    services:
+      # Label used to access the service container
+      emulator:
+        # Docker image
+        image: gcr.io/cloud-spanner-emulator/emulator:1.2.0
+        #
+        ports:
+          # Opens tcp port 6379 on the host and service container
+          - 9010:9010
+          - 9020:9020
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
       - name: Set up gcloud Cloud SDK environment
         # You may pin to the exact commit or the version.
         # uses: google-github-actions/setup-gcloud@94337306dda8180d967a56932ceb4ddcf01edae7
@@ -53,15 +68,20 @@ jobs:
             # these credentials.
            export_default_credentials: # optional
       
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: echo Hello, world!
+        
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+      # https://cloud.google.com/spanner/docs/emulator#using_the_gcloud_cli_with_the_emulator
+      - run: gcloud info
+      - run: |
+          gcloud config configurations create emulator
+          gcloud config set auth/disable_credentials true
+          gcloud config set project spanner-lab-project
+          gcloud config set api_endpoint_overrides/spanner http://localhost:9020/
+          
+      - run: gcloud spanner instances create cloudspanner-lab --config=emulator-config --description="Test Instance"  --nodes=1
+      
