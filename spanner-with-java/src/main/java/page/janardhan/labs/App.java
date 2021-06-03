@@ -1,5 +1,8 @@
 package page.janardhan.labs;
 
+import com.google.cloud.spanner.*;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 // https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/UUID.html
@@ -69,6 +72,39 @@ public class App
             new Song(getUUID(), "Hot Sauce", 2021, 96),
             new Song(getUUID(), "Next Level", 2021, 97)
         );
+    
+    // https://cloud.google.com/spanner/docs/samples/spanner-update-data
+    // https://cloud.google.com/spanner/docs/samples/spanner-insert-data
+    static void writeExampleData(DatabaseClient dbClient) {
+  List<Mutation> mutations = new ArrayList<>();
+
+// TODO: singers implementation
+//  for (Singer singer : SINGERS) {
+//    mutations.add(
+//        Mutation.newInsertBuilder("Singers")
+//            .set("SingerId")
+//            .to(singer.singerId)
+//            .set("FirstName")
+//            .to(singer.firstName)
+//            .set("LastName")
+//            .to(singer.lastName)
+//            .build());
+//    }
+    for (Song song : SONGS) {
+      mutations.add(
+          Mutation.newInsertBuilder("Songs")
+              .set("SongId")
+              .to(song.songId)
+              .set("Title")
+              .to(song.title)
+              .set("Year")
+              .to(song.year)
+              .set("Peak")
+              .to(song.peak)
+              .build());
+    }
+      dbClient.write(mutations);
+    }
 
     public static void main( String[] args )
     {
