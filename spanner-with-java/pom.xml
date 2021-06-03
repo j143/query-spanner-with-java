@@ -8,6 +8,12 @@
   <name>spanner-with-java</name>
   <url>http://maven.apache.org</url>
 
+  <repositories>
+    <repository>
+      <id>maven-repo-1</id>
+      <url>https://repo1.maven.org/maven2</url>
+    </repository>
+  </repositories>
   <!-- 
     https://maven.apache.org/plugins/maven-compiler-plugin/examples/set-compiler-source-and-target.html -->
   <build>
@@ -64,18 +70,18 @@
     <dependency>
       <groupId>com.google.cloud</groupId>
       <artifactId>google-cloud-spanner</artifactId>
-      <version>6.5</version>
+      <version>6.4.4</version>
     </dependency>
 
     <!-- Google core libraries for Java 
       https://search.maven.org/artifact/com.google.guava/guava/30.1.1-jre/bundle -->
+
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
       <version>30.1.1-jre</version>
-      <type>bundle</type>
+      <!-- <type>bundle</type> -->
     </dependency>
-
     <!-- Google OAUTH library http
       https://search.maven.org/artifact/com.google.auth/google-auth-library-oauth2-http/0.26.0/jar -->
     <dependency>
