@@ -37,3 +37,13 @@ mvn -B archetype:generate \
   -DgroupId=page.janardhan.labs \
   -DartifactId=spanner-with-java
 ```
+
+
+Refer:
+
+0. https://cloud.google.com/spanner/docs/getting-started/java
+1. https://cloud.google.com/spanner/docs/adding-spring
+2. https://cloud.google.com/appengine/docs/standard/java11/specifying-dependencies
+
+Add dependencies to the `pom.xml`
+
