@@ -108,12 +108,7 @@ jobs:
         run: |
           gcloud spanner databases execute-sql demo \
             --instance=cloudspanner-lab  \
-            --sql='CREATE TABLE Songs {
-                     SongId INT64 NOT NULL,
-                     Title STRING(1024),
-                     Year INT64,
-                     Peak INT64
-                   } PRIMARY KEY (SongId);' \
+            --sql='CREATE TABLE Songs { SongId INT64 NOT NULL, Title STRING(1024), Year INT64, Peak INT64 } PRIMARY KEY (SongId);'
           
         
       - run: java -jar spanner-with-java/target/spanner-with-java-1.0-SNAPSHOT-jar-with-dependencies.jar
