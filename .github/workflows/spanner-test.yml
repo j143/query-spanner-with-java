@@ -106,11 +106,14 @@ jobs:
       # Spanner Database docs:
       # https://cloud.google.com/sdk/gcloud/reference/spanner/databases/execute-sql 
       # https://cloud.google.com/sdk/gcloud/reference/spanner/databases/ddl/update
+      # 
+      # Data Definition Language (DDL) reference:
+      # https://cloud.google.com/spanner/docs/data-definition-language#naming_conventions
       - name: Create Table
         run: |
           gcloud spanner databases ddl update demo \
             --instance=cloudspanner-lab  \
-            --ddl='CREATE TABLE Songs { SongId INT64 NOT NULL, Title STRING(1024), Year INT64, Peak INT64 } PRIMARY KEY (SongId);'
+            --ddl='CREATE TABLE Songs ( SongId STRING(1024) NOT NULL, Title STRING(1024), Year INT64, Peak INT64 ) PRIMARY KEY (SongId);'
           
         
       - run: java -jar spanner-with-java/target/spanner-with-java-1.0-SNAPSHOT-jar-with-dependencies.jar
