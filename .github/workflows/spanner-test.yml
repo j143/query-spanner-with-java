@@ -91,9 +91,19 @@ jobs:
           gcloud config set auth/disable_credentials true
           gcloud config set project spanner-lab-project
           gcloud config set api_endpoint_overrides/spanner http://localhost:9020/
-          
-      - run: gcloud spanner instances create cloudspanner-lab --config=emulator-config --description="Test Instance"  --nodes=1
-      - run: gcloud spanner instances list
+      
+      
+      - name: Create Spanner instance
+        run: |
+          gcloud spanner instances create cloudspanner-lab --config=emulator-config --description="Test Instance"  --nodes=1
+          gcloud spanner instances list
+          gcloud spanner instances describe cloudspanner-lab
+      
+      # https://cloud.google.com/sdk/gcloud/reference/spanner/databases/create
+      - name: Create database
+        run: gcloud spanner databases create demo --instance=cloudspanner-lab
+        
+        
       - run: java -jar spanner-with-java/target/spanner-with-java-1.0-SNAPSHOT-jar-with-dependencies.jar
         env:
           SPANNER_EMULATOR_HOST: localhost:9010
