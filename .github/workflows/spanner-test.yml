@@ -102,7 +102,19 @@ jobs:
       # https://cloud.google.com/sdk/gcloud/reference/spanner/databases/create
       - name: Create database
         run: gcloud spanner databases create demo --instance=cloudspanner-lab
-        
+      
+      # https://cloud.google.com/sdk/gcloud/reference/spanner/databases/execute-sql 
+      - name: Create Table
+        run: |
+          gcloud spanner databases execute-sql demo \
+            --instance=cloudspanner-lab  \
+            --sql='CREATE TABLE Songs {
+                     SongId INT64 NOT NULL,
+                     Title STRING(1024),
+                     Year INT64,
+                     Peak INT64
+                   } PRIMARY KEY (SongId);' \
+          
         
       - run: java -jar spanner-with-java/target/spanner-with-java-1.0-SNAPSHOT-jar-with-dependencies.jar
         env:
