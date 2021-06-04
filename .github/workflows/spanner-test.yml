@@ -108,7 +108,7 @@ jobs:
       # https://cloud.google.com/sdk/gcloud/reference/spanner/databases/ddl/update
       - name: Create Table
         run: |
-          gcloud spanner databases execute-sql demo \
+          gcloud spanner databases ddl update demo \
             --instance=cloudspanner-lab  \
             --ddl='CREATE TABLE Songs { SongId INT64 NOT NULL, Title STRING(1024), Year INT64, Peak INT64 } PRIMARY KEY (SongId);'
           
