@@ -107,7 +107,7 @@ public class App {
                     .executeQuery(Statement.of("SELECT SongId, Title, Year FROM Songs"))) {
                 while (resultSet.next()) {
                     System.out.printf(
-                            "%d %d %s\n", resultSet.getString(0), resultSet.getString(1), resultSet.getLong(2));
+                            "%s %s %d\n", resultSet.getString(0), resultSet.getString(1), resultSet.getLong(2));
                 }
             }
         } finally {

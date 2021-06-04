@@ -39,6 +39,15 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout code
         uses: actions/checkout@v2
+      
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+      
+      - name: Build with Maven
+        run: mvn -B package --file spanner-with-java/pom.xml
         
       - name: Set up gcloud Cloud SDK environment
         # You may pin to the exact commit or the version.
@@ -82,6 +91,32 @@ jobs:
           gcloud config set auth/disable_credentials true
           gcloud config set project spanner-lab-project
           gcloud config set api_endpoint_overrides/spanner http://localhost:9020/
+      
+      
+      - name: Create Spanner instance
+        run: |
+          gcloud spanner instances create cloudspanner-lab --config=emulator-config --description="Test Instance"  --nodes=1
+          gcloud spanner instances list
+          gcloud spanner instances describe cloudspanner-lab
+      
+      # https://cloud.google.com/sdk/gcloud/reference/spanner/databases/create
+      - name: Create database
+        run: gcloud spanner databases create demo --instance=cloudspanner-lab
+      
+      # Spanner Database docs:
+      # https://cloud.google.com/sdk/gcloud/reference/spanner/databases/execute-sql 
+      # https://cloud.google.com/sdk/gcloud/reference/spanner/databases/ddl/update
+      # 
+      # Data Definition Language (DDL) reference:
+      # https://cloud.google.com/spanner/docs/data-definition-language#naming_conventions
+      - name: Create Table
+        run: |
+          gcloud spanner databases ddl update demo \
+            --instance=cloudspanner-lab  \
+            --ddl='CREATE TABLE Songs ( SongId STRING(1024) NOT NULL, Title STRING(1024), Year INT64, Peak INT64 ) PRIMARY KEY (SongId);'
           
-      - run: gcloud spanner instances create cloudspanner-lab --config=emulator-config --description="Test Instance"  --nodes=1
+        
+      - run: java -jar spanner-with-java/target/spanner-with-java-1.0-SNAPSHOT-jar-with-dependencies.jar
+        env:
+          SPANNER_EMULATOR_HOST: localhost:9010
       
