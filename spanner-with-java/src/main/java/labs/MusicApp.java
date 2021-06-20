@@ -10,7 +10,7 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-public class App {
+public class MusicApp {
 
     public final static DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
